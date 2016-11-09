@@ -1,0 +1,154 @@
+---
+title: "Confusion"
+author: "Lyron Winderbaum"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Contents
+
+- Statistical Tests.
+- Confusion Matrix.
+- Family-wise Error Rate.
+- R Markdown.
+
+## Statistical Tests
+
+What is a statistical test? 
+
+In this context, a test is a method for answering a 
+binary question --- a question with two possible outcomes.
+
+We will use the terminology Positive/ Negative for these two outcomes although 
+different terminology might be appropriate in any given context.
+
+Some examples:
+
+- A test for HIV can result in positive/ negative results.
+- Similarly a test for LNM.
+- Testing for the difference in the mean serum concentration of a protein 
+  between two experimental groups results in either a difference being detected, 
+  or no difference detected.
+
+## Confusion Matrix
+
+-------------------- -------------------- 
+ TP: True  Positive   FN: False Negative
+ FP: False Positive   TN: True  Negative 
+-------------------- -------------------- 
+
+This (possibly) deceptive 2x2 table is called the confusion matrix.
+
+The words "True" and "False" refer to the truth, while the words "Positive"
+and "Negative" refer to the outcome of your test.
+
+## Confusion Matrix
+Many common concepts are directly derived from the confusion matrix.
+Including many TLA (Three Letter Acronyms) that you should recognise.
+
+- Significance: FPR = FP / (FP + TN) = 1 - specificity
+- Power: TPR = TP / (TP + FN) = sensitivity
+- Specificity: TNR = TN / (FP + TN))
+- Prevalence: (TP + FN) / (TP + FN + FP + TN)
+- Precision: PPV = TP / (TP + FP)
+- False Discovery Rate: FDR = FP / (TP + FP) = 1 - PPV
+
+Notice Significance and Power are plotted against each other in an ROC curve.
+
+## Confusion Matrix
+And some that you might not recognise.
+
+- Accuracy: (TP + TN) / (TP + FN + FP + TN)
+- F1 = 2TP / (2TP + FP + FN)
+- Informedness: sensitivity + specificity - 1 = DIPPS
+
+and in case you're curious and interested in further reading,
+you might like to check out the 
+[Mathews Correlation Coefficient](https://en.wikipedia.org/wiki/Matthews_correlation_coefficient) (MCC). 
+
+If you do follow up by reading more about this topic, note
+that my notation here is cosistent with that of the 
+[wikipedia page](https://en.wikipedia.org/wiki/Sensitivity_and_specificity).
+
+## P-Values
+But for now lets just focus on one thing: Significance, also known as False 
+Positive Rate (FPR), or type I error rate.
+
+Why?
+
+Because we were talking about statistical tests, and the first thing that brings
+to mind is p-values. 
+
+What is the link between p-values and FPR?
+
+Remember where we started? A statistical test is a method for producing an 
+answer to a binary question. Yes, or no. Often, this is acheived by calculating 
+a p-value, and then choosing an answer based on if the resulting p-value is less
+than 0.05 or not.
+
+Why do we make decisions in this way?
+
+## P-Values
+
+Well, because assuming that you have calculated your p-values correctly, and 
+that any required assumptions are true, then making our decision in this way 
+will produce a FPR of 0.05.
+
+What does that mean?
+
+Well, lets take an example. Lets say you are looking for a difference in the 
+concentration of a protein between two groups. In that context, it means that if 
+you where to replicate your experiement many, many times, you would 
+expect 5% of the replicates in which the truth was that there was no difference 
+to produce the opposite conclusion (that there was infact a difference).
+
+## Family-wise Error Rate
+
+Now that was under the assumption you were just looking at a single protein. 
+What if you were looking at several proteins? Well, the FPR, in this context
+interpreted as the probability of coming to the conclusion that there is a 
+difference in protein concentration when in truth there is no such difference, 
+would still be 5% for each individual protein independantly, again assumping 
+p-values where calculated correctly and all neccessary assumptions are 
+satisfied.
+
+However, the probability of there being at least one false positive amongst 
+the set of tests performed (each with individual probability 5%), will be much 
+greater than 5%. This is called the Family-wise error rate (FWER). Often 
+attention will be focused on differences found, which will naturally 
+include such False Positives that occur with increased probability, and this can 
+be problematic.
+
+## Multiple Testing Correction
+It can however be addressed by adjusting the p-value cutoff used in the 
+decision-making process, thereby controlling the FWER. 
+
+In practice, this results in using more stringent p-value cutoffs in order to 
+guarantee a 5% FWER. 
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for
+authoring HTML, PDF, and MS Word documents. For more details on using R Markdown
+see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes
+both content as well as the output of any embedded R code chunks within the
+document. A couple of examples follow.
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
