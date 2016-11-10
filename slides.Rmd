@@ -5,11 +5,6 @@ date: "`r Sys.Date()`"
 output: ioslides_presentation
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
-
-
 ## Contents
 
 - Statistical Tests.
@@ -19,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Statistical Tests
 
-What is a statistical test? 
+What is a statistical test?
 
 In this context, a test is a method for answering a 
 binary question --- a question with two possible outcomes.
